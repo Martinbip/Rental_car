@@ -43,15 +43,27 @@ model Account {
   @@unique([provider, providerAccountId])
 }
 
+enum TransmissionType {
+  Manual
+  Automatic
+}
+enum FuelType {
+  Gasoline 
+  Diesel 
+  Electric 
+  
+}
+
 model Listing {
   id            String @id @default(auto()) @map("_id") @db.ObjectId
   title         String
   description   String
   imageSrc      String
   category      String
-  roomCount     Int
-  bathroomCount Int
-  guestCount    Int
+  seatCount     Int
+  fuelConsumption Int
+  transmissionType  TransmissionType
+  fuel          FuelType
   locationValue String
   price         Int
 
