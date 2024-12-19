@@ -1,4 +1,4 @@
-import { Listing, Reservation, User } from "@prisma/client";
+import { Listing, Reservation, User, FuelType, TransmissionType } from "@prisma/client";
 
 export type SafeUser = Omit<
   User,
@@ -35,11 +35,17 @@ export type CountrySelectValue = {
 
 export interface ISearchListingParams {
   userId?: string;
-  guestCount?: number;
-  roomCount?: number;
-  bathroomCount?: number;
+  seatCount?: number;
+  fuelConsumption?: number;
+  transmissionType?: TransmissionType,
+  fuel?: FuelType,
   startDate?: string;
   endDate?: string;
   locationValue?: string;
   category?: string;
+}
+
+export interface ICommonSelectParams {
+  value: any;
+  label: string;
 }

@@ -12,7 +12,7 @@ import "../globals.css";
 
 export const metadata = {
   title: "RentalCar",
-  description: "Website cho thue xe tu lai",
+  description: "Website for car rental",
   
 };
 

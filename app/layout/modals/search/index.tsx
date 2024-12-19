@@ -8,11 +8,13 @@ import qs from "query-string";
 import { CountrySelectValue } from "@/app/types";
 import useSearchModal from "@/app/hooks/useSearchModal";
 import Modal from "@/app/components/modal";
-import { formatISO } from "date-fns";
+import { formatISO, set } from "date-fns";
 import Heading from "@/app/components/heading";
 import CountrySelect from "@/app/components/country-select";
 import Calendar from "@/app/components/calendar";
 import CounterInput from "@/app/components/counter-input";
+import CommonSelect from "@/app/components/common-select";
+import { fuelOptions, transmissionTypeOptions } from "@/app/constant";
 
 enum STEPS {
   LOCATION = 0,
@@ -26,14 +28,30 @@ const SearchModal = () => {
   const params = useSearchParams();
   const [step, setStep] = useState(STEPS.LOCATION);
   const [location, setLocation] = useState<CountrySelectValue>();
-  const [guestCount, setGuestCount] = useState(1);
-  const [roomCount, setRoomCount] = useState(1);
-  const [bathroomCount, setBathroomCount] = useState(1);
+  // const [guestCount, setGuestCount] = useState(1);
+  // const [roomCount, setRoomCount] = useState(1);
+  // const [bathroomCount, setBathroomCount] = useState(1);
+  const [seatCount, setSeatCount] = useState(4);
+  const [fuel, setFuel] = useState('');
+  const [fuelConsumption, setFuelConsumption] = useState(8);
+  const [transmissionType, setTransmissionType] = useState('');
   const [dateRange, setDateRange] = useState<Range>({
     key: "selection",
     startDate: new Date(),
     endDate: new Date(),
   });
+
+  const resetState = () => {
+    setSeatCount(4);
+    setFuel('');
+    setFuelConsumption(8);
+    setTransmissionType('');
+    setDateRange({
+      startDate: new Date(),
+      endDate: new Date(),
+      key: 'selection',
+    });
+  };
 
   const Map = useMemo(
     () => dynamic(() => import("@/app/components/map"), { ssr: false }),
@@ -61,9 +79,10 @@ const SearchModal = () => {
     const updatedQuery: any = {
       ...currentQuery,
       locationValue: location?.value,
-      guestCount,
-      roomCount,
-      bathroomCount,
+      seatCount,
+      fuel,
+      fuelConsumption,
+      transmissionType,
     };
 
     if (dateRange.startDate) {
@@ -83,7 +102,7 @@ const SearchModal = () => {
 
     setStep(STEPS.LOCATION);
     searchModal.onClose();
-
+    resetState();
     router.push(url);
   }, [
     step,
@@ -91,11 +110,12 @@ const SearchModal = () => {
     params,
     router,
     location,
-    roomCount,
     dateRange,
-    guestCount,
     searchModal,
-    bathroomCount,
+    seatCount,
+    fuel,
+    fuelConsumption,
+    transmissionType,
   ]);
 
   const actionLabel = useMemo(
@@ -147,7 +167,7 @@ const SearchModal = () => {
               title="More information"
               subtitle="Find your perfect place!"
             />
-            <CounterInput
+            {/* <CounterInput
               onChange={setGuestCount}
               title="Guests"
               subTitle="How many guests are coming?"
@@ -164,11 +184,33 @@ const SearchModal = () => {
               title="Bathrooms"
               subTitle="How many bathrooms do you need?"
               value={bathroomCount}
+            /> */}
+            <CounterInput
+              value={seatCount}
+              onChange={setSeatCount}
+              title="Seats"
+              subTitle="How many seats does your car have?"
+            />
+            <CounterInput
+              value={fuelConsumption}
+              onChange={setFuelConsumption}
+              title="Fuel Consumption"
+              subTitle="How much fuel does your car consume per 100 kilometers?"
+            />
+            <CommonSelect
+              title="Fuel Type"
+              options={fuelOptions}
+              onChange={setFuel}
+            />
+            <CommonSelect
+              title="Transmission Type"
+              onChange={setTransmissionType}
+              options={transmissionTypeOptions}
             />
           </div>
         );
     }
-  }, [step, Map, location, dateRange, guestCount, roomCount, bathroomCount]);
+  }, [step, Map, location, dateRange, seatCount, fuelConsumption]);
 
   return (
     <Modal

@@ -1,5 +1,5 @@
 "use client";
-import { Reservation, User } from "@prisma/client";
+import { FuelType, Reservation, TransmissionType, User } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 
@@ -37,7 +37,6 @@ const ListingDetail = ({
   const [isLoading, setLoading] = useState(false);
   const [totalPrice, setTotalPrice] = useState(listing.price);
   const [dateRange, setDateRange] = useState<Range>(initialDateRange);
-
   const disabledDates = useMemo(() => {
     let dates: Date[] = [];
     reservations.forEach((reservation) => {
@@ -45,6 +44,7 @@ const ListingDetail = ({
         start: new Date(reservation.startDate),
         end: new Date(reservation.endDate),
       });
+      console.log(range, dates);
       dates = [...dates, ...range];
     });
     return dates;
@@ -113,6 +113,10 @@ const ListingDetail = ({
               roomCount={listing.roomCount}
               guestCount={listing.guestCount}
               bathroomCount={listing.bathroomCount}
+              seatCount={listing.seatCount as number}
+              fuel={listing.fuel as FuelType}
+              fuelConsumption={listing.fuelConsumption as number}
+              transmissionType={listing.transmissionType as TransmissionType}
               locationValue={listing.locationValue}
             />
             <div className="order-first md-10 md:order-last md:col-span-3">
@@ -122,7 +126,7 @@ const ListingDetail = ({
                 onChangeDate={(value) => setDateRange(value)}
                 dateRange={dateRange}
                 onSubmit={onCreateReservation}
-                disabled={isLoading}
+                disabled={isLoading || currentUser?.id === listing.user.id}
                 disabledDates={disabledDates}
               />
             </div>

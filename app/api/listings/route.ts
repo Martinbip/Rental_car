@@ -15,9 +15,10 @@ export async function POST(request: Request) {
     const {
       category,
       location,
-      guestCount,
-      roomCount,
-      bathroomCount,
+      seatCount,
+      transmissionType,
+      fuel,
+      fuelConsumption,
       imageSrc,
       price,
       title,
@@ -34,9 +35,10 @@ export async function POST(request: Request) {
       return new NextResponse("Image is required", { status: 400 });
     }
     if (
-      !guestCount ||
-      !roomCount ||
-      !bathroomCount ||
+      !seatCount ||
+      !fuel ||
+      !fuelConsumption ||
+      !transmissionType ||
       !price ||
       !title ||
       !description
@@ -50,10 +52,11 @@ export async function POST(request: Request) {
         title,
         category,
         imageSrc,
-        roomCount,
-        guestCount,
         description,
-        bathroomCount,
+        seatCount,
+        transmissionType,
+        fuel,
+        fuelConsumption,
         userId: currentUser.id,
         locationValue: location.value,
       },

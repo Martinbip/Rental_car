@@ -7,9 +7,10 @@ export default async function getListings(
   try {
     const {
       userId,
-      guestCount,
-      roomCount,
-      bathroomCount,
+      seatCount,
+      fuel,
+      fuelConsumption,
+      transmissionType,
       startDate,
       endDate,
       locationValue,
@@ -23,37 +24,36 @@ export default async function getListings(
     if (category) {
       query.category = category;
     }
-    if (roomCount) {
-      query.roomCount = { gte: +roomCount };
-    }
-    if (guestCount) {
-      query.guestCount = { gte: +guestCount };
-    }
-    if (bathroomCount) {
-      query.bathroomCount = { gte: +bathroomCount };
-    }
     if (locationValue) {
       query.locationValue = locationValue;
     }
-// ktra ngày không trùng với ngày thuê của người khác 
+    if (seatCount) {
+      query.seatCount = { gte: +seatCount };
+    }
+    if (fuel) {
+      query.fuel = fuel;
+    }
+    if (fuelConsumption) {
+      query.fuelConsumption = { gte: +fuelConsumption };
+    }
+    if (transmissionType) {
+      query.transmissionType = transmissionType;
+    }
+    // ktra ngày không trùng với ngày thuê của người khác
     if (startDate && endDate) {
       query.NOT = {
         reservation: {
           some: {
             OR: [
-              { endDate: { gte: startDate },
-                startDate: { lte: startDate } 
-              },
-              
-              { startDate: { gte: endDate },
-                endDate: { lte: endDate } 
-              },
+              { endDate: { gte: startDate }, startDate: { lte: startDate } },
+
+              { startDate: { gte: endDate }, endDate: { lte: endDate } },
             ],
           },
         },
       };
     }
-
+    console.log(query);
     const listings = await prisma.listing.findMany({
       where: query,
       orderBy: {

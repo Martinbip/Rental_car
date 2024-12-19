@@ -1,6 +1,7 @@
 "use client";
 
 import CategoryInput from "@/app/components/category-input";
+import CommonSelect from "@/app/components/common-select";
 import CounterInput from "@/app/components/counter-input";
 import CountrySelect from "@/app/components/country-select";
 import Heading from "@/app/components/heading";
@@ -8,8 +9,9 @@ import ImageUpload from "@/app/components/image-upload";
 import Input from "@/app/components/input";
 import Map from "@/app/components/map";
 import Modal from "@/app/components/modal";
-import { categories } from "@/app/constant";
+import { categories, fuelOptions, transmissionTypeOptions } from "@/app/constant";
 import useRentModal from "@/app/hooks/useRentModal";
+import { FuelType, TransmissionType } from "@prisma/client";
 import axios from "axios";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
@@ -45,6 +47,10 @@ const RentModal = () => {
       guestCount: 1,
       roomCount: 1,
       bathroomCount: 1,
+      seatCount: 4,
+      transmissionType: TransmissionType.Automatic,
+      fuel: FuelType.Gasoline,
+      fuelConsumption: 8,
       imageSrc: "",
       price: 1,
       title: "",
@@ -57,6 +63,10 @@ const RentModal = () => {
   const guestCountValue = watch("guestCount");
   const roomCountValue = watch("roomCount");
   const bathroomCountValue = watch("bathroomCount");
+  const seatCountValue = watch("seatCount");
+  const transmissionTypeValue = watch("transmissionType");
+  const fuelValue = watch("fuel");
+  const fuelConsumptionValue = watch("fuelConsumption");
   const imageSrcValue = watch("imageSrc");
 
   const Map = useMemo(
@@ -67,6 +77,7 @@ const RentModal = () => {
 
   const setCustomValue = useCallback(
     (id: string, value: any) => {
+      console.log(id, value);
       setValue(id, value, {
         shouldValidate: true,
         shouldDirty: true,
@@ -82,11 +93,11 @@ const RentModal = () => {
 
   const onSubmit: SubmitHandler<FieldValues> = useCallback(
     (data) => {
+      console.log(data);
       if (step !== STEPS.PRICE) {
         return onNext();
       }
       setIsLoading(true);
-
       axios
         .post("/api/listings", data)
         .then(() => {
@@ -167,10 +178,10 @@ const RentModal = () => {
         return (
           <div className="flex flex-col gap-8">
             <Heading
-              title="Share some basics about your place"
+              title="Share some basics about your car"
               subtitle="What amenities do you have?"
             />
-            <CounterInput
+            {/* <CounterInput
               value={guestCountValue}
               onChange={(value) => setCustomValue("guestCount", value)}
               title="Guests"
@@ -189,6 +200,28 @@ const RentModal = () => {
               onChange={(value) => setCustomValue("bathroomCount", value)}
               title="Bathrooms"
               subTitle="How many bathrooms do you have?"
+            /> */}
+            <CounterInput
+              value={seatCountValue}
+              onChange={(value) => setCustomValue("seatCount", value)}
+              title="Seats"
+              subTitle="How many seats does your car have?"
+            />
+            <CounterInput
+              value={fuelConsumptionValue}
+              onChange={(value) => setCustomValue("fuelConsumption", value)}
+              title="Fuel Consumption"
+              subTitle="How much fuel does your car consume per 100 kilometers?"
+            />
+            <CommonSelect
+              title="Fuel Type"
+              options={fuelOptions}
+              onChange={(value) => setCustomValue("fuel", value)}
+            />
+            <CommonSelect
+              title="Transmission Type"
+              onChange={(value) => setCustomValue("transmissionType", value)}
+              options={transmissionTypeOptions}
             />
           </div>
         );
@@ -259,9 +292,10 @@ const RentModal = () => {
     locationValue,
     imageSrcValue,
     setCustomValue,
-    roomCountValue,
-    guestCountValue,
-    bathroomCountValue,
+    seatCountValue,
+    fuelConsumptionValue,
+    // fuelValue,
+    // transmissionTypeValue
   ]);
 
   return (
