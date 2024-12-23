@@ -15,33 +15,28 @@ interface IListingInfoProps {
     label: string;
     description: string;
   };
-  bathroomCount: number;
-  guestCount: number;
-  roomCount: number;
   seatCount: number,
   transmissionType: TransmissionType,
   fuel: FuelType,
   fuelConsumption: number,
   description: string;
   locationValue: string;
+  rentedBy?: SafeUser;
 }
 
 const ListingInfo = ({
   user,
   category,
-  bathroomCount,
-  guestCount,
-  roomCount,
   seatCount,
   transmissionType,
   fuel,
   fuelConsumption,
   description,
   locationValue,
+  rentedBy
 }: IListingInfoProps) => {
   const { getByValue } = useCountries();
   const cordinates = getByValue(locationValue)?.latlng;
-
   return (
     <div className="col-span-4 flex flex-col gap-8">
       <div className="flex flex-col gap-2 ">
@@ -49,6 +44,13 @@ const ListingInfo = ({
           <div>Car owner {user.name}</div>
           <Avatar src={user.image} />
         </div>
+        {rentedBy && 
+          <div className="text-xl font-semibold flex flex-row items-center gap-2 mt-1">
+            <div>Rented by {rentedBy.name}</div>
+            <Avatar src={rentedBy.image} />
+          </div>
+        }
+        
         <div>
           <div className="flex flex-row items-center gap-4 font-light text-neutral-500">
             <div className="bg-green-300 text-black font-bold py-2 px-4 rounded-full">{seatCount} seats</div>

@@ -51,7 +51,7 @@ const RentModal = () => {
       transmissionType: TransmissionType.Automatic,
       fuel: FuelType.Gasoline,
       fuelConsumption: 8,
-      imageSrc: "",
+      imageSrc: [],
       price: 1,
       title: "",
       description: "",
@@ -77,7 +77,6 @@ const RentModal = () => {
 
   const setCustomValue = useCallback(
     (id: string, value: any) => {
-      console.log(id, value);
       setValue(id, value, {
         shouldValidate: true,
         shouldDirty: true,
@@ -93,7 +92,6 @@ const RentModal = () => {
 
   const onSubmit: SubmitHandler<FieldValues> = useCallback(
     (data) => {
-      console.log(data);
       if (step !== STEPS.PRICE) {
         return onNext();
       }
@@ -181,26 +179,6 @@ const RentModal = () => {
               title="Share some basics about your car"
               subtitle="What amenities do you have?"
             />
-            {/* <CounterInput
-              value={guestCountValue}
-              onChange={(value) => setCustomValue("guestCount", value)}
-              title="Guests"
-              subTitle="How many guests do you allow?"
-            />
-            <hr />
-            <CounterInput
-              value={roomCountValue}
-              onChange={(value) => setCustomValue("roomCount", value)}
-              title="Rooms"
-              subTitle="How many rooms do you have?"
-            />
-            <hr />
-            <CounterInput
-              value={bathroomCountValue}
-              onChange={(value) => setCustomValue("bathroomCount", value)}
-              title="Bathrooms"
-              subTitle="How many bathrooms do you have?"
-            /> */}
             <CounterInput
               value={seatCountValue}
               onChange={(value) => setCustomValue("seatCount", value)}

@@ -1,5 +1,5 @@
 import prisma from "@/app/libs/prismadb";
-import { SafeListing, SafeReservation } from "../types";
+import { SafeListing, SafeReservation, SafeUser } from "../types";
 
 interface IParams {
   listingId?: string;
@@ -9,7 +9,9 @@ interface IParams {
 
 export default async function getReservations(
   params: IParams
-): Promise<(SafeReservation & { listing: SafeListing })[]> {
+): Promise<
+  (SafeReservation & { listing: SafeListing } & { user: SafeUser })[]
+> {
   try {
     const { listingId, userId, authorId } = params;
     const query: any = {};
@@ -27,6 +29,7 @@ export default async function getReservations(
       where: query,
       include: {
         listing: true,
+        user: true,
       },
       orderBy: {
         createdAt: "desc",
@@ -44,9 +47,16 @@ export default async function getReservations(
         createdAt: reservation.listing.createdAt.toISOString(),
         updatedAt: reservation.listing.updatedAt.toISOString(),
       },
+      user: {
+        ...reservation.user,
+        createdAt: reservation.user.createdAt.toISOString(),
+        updatedAt: reservation.user.updatedAt.toISOString(),
+        emailVerified: reservation.user.emailVerified
+          ? reservation.user.emailVerified.toISOString()
+          : null,
+      },
     }));
-  } 
-  catch (error: any) {
-  throw new Error(error);
+  } catch (error: any) {
+    throw new Error(error);
   }
 }

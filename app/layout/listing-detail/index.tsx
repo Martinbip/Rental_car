@@ -1,6 +1,6 @@
 "use client";
 import { FuelType, Reservation, TransmissionType, User } from "@prisma/client";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 
 import { categories } from "@/app/constant";
@@ -25,13 +25,14 @@ const initialDateRange = {
 interface IListingDetailProps {
   listing: SafeListing & { user: SafeUser };
   currentUser?: SafeUser | null;
-  reservations?: SafeReservation[];
+  reservations?: (SafeReservation & { listing: SafeListing } & { user: SafeUser })[] ;
 }
 const ListingDetail = ({
   listing,
   currentUser,
   reservations = [],
 }: IListingDetailProps) => {
+  const reservationId = useSearchParams()?.get("reservationId");
   const loginModal = useLoginModal();
   const router = useRouter();
   const [isLoading, setLoading] = useState(false);
@@ -44,7 +45,6 @@ const ListingDetail = ({
         start: new Date(reservation.startDate),
         end: new Date(reservation.endDate),
       });
-      console.log(range, dates);
       dates = [...dates, ...range];
     });
     return dates;
@@ -108,11 +108,9 @@ const ListingDetail = ({
           <div className="grid grid-cols-1 md:grid-cols-7 md:gap-10 mt-6">
             <ListingInfo
               user={listing.user}
+              rentedBy={reservations.find((r) => r.id === reservationId)?.user}
               category={category}
               description={listing.description}
-              roomCount={listing.roomCount}
-              guestCount={listing.guestCount}
-              bathroomCount={listing.bathroomCount}
               seatCount={listing.seatCount as number}
               fuel={listing.fuel as FuelType}
               fuelConsumption={listing.fuelConsumption as number}
