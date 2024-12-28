@@ -24,8 +24,8 @@ const PropertiesPage = async () => {
     return (
       <ClientOnly>
         <EmptyState
-          title="No property found"
-          subTitle="Looks like you don't have property yet."
+          title="No car found"
+          subTitle="Looks like you don't have car yet."
         />
       </ClientOnly>
     );

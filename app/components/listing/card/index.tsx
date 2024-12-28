@@ -9,18 +9,23 @@ import { useRouter } from "next/navigation";
 import React, { useCallback, useMemo } from "react";
 import HeartButton from "../../heart-button";
 import Button from "../../button";
+import Avatar from "@/app/components/avatar";
+//  import { SafeUser } from "@/app/types";
 
 interface IListingCardProps {
-  data: SafeListing;
+  
+  data: SafeListing&{user:SafeUser};
   currentUser?: SafeUser | null;
   reservation?: SafeReservation;
   onAction?: (id: string) => void;
   disabled?: boolean;
   actionLabel?: string;
   actionId?: string;
+  
 }
 
 const ListingCard = ({
+
   data,
   currentUser,
   onAction,
@@ -74,6 +79,9 @@ const ListingCard = ({
           <div className="absolute top-3 right-3">
             <HeartButton listingId={data.id} currentUser={currentUser} />
           </div>
+          <div className="absolute bot-3 left-3">
+          <Avatar src={data.user.image || "/images/placeholder.jpg"} />
+          </div>
         </div>
         <div className="font-semibold text-lg">
           {location?.region}, {location?.label}
@@ -82,8 +90,8 @@ const ListingCard = ({
           {reservationDate || data.category}
         </div>
         <div className="flex flex-row items-center gap-1">
-          <div className="font-semibold">$ {price}</div>
-          {!reservation && <div className="font-light">night</div>}
+          <div className="font-semibold">VND {price}</div>
+          {!reservation && <div className="font-light">ngày</div>}
         </div>
         {onAction && actionLabel && (
           <Button

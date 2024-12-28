@@ -7,7 +7,7 @@ import React from "react";
 
 interface IFavorites {
   currentUser: SafeUser;
-  listings: SafeListing[];
+  listings: (SafeListing&{user:SafeUser})[];
 }
 
 const Favorites = ({ currentUser, listings }: IFavorites) => {

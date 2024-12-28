@@ -4,7 +4,7 @@ import { ThreeDots } from "react-loader-spinner";
 
 const Loader = () => {
   return (
-    <div className="fixed top-0 left-0 h-[100vh] w-[100vw] bg-white text-rose-500 font-bold uppercase flex flex-col justify-center items-center z-50">
+    <div className="fixed top-0 left-0 h-[100vh] w-[100vw] bg-white text-green-500 font-bold uppercase flex flex-col justify-center items-center z-50">
       <ThreeDots
         height="80"
         width="80"

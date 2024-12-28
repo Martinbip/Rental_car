@@ -139,7 +139,7 @@ const RentModal = () => {
         return (
           <div className="flex flex-col gap-8">
             <Heading
-              title="Which of these best describes your place?"
+              title="Which of these best describes your car?"
               subtitle="Pick a category"
             />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[50vh] overflow-y-auto">
@@ -160,7 +160,7 @@ const RentModal = () => {
         return (
           <div className="flex flex-col gap-8">
             <Heading
-              title="Where is your place located?"
+              title="What's the current location of the car?"
               subtitle="Help guests find you!"
             />
             <CountrySelect
@@ -207,8 +207,8 @@ const RentModal = () => {
         return (
           <div className="flex flex-col gap-8 ">
             <Heading
-              title="Add a photo of your place"
-              subtitle="Show guests what your place looks like!"
+              title="Add a photo of your cars"
+              subtitle="Show guests what your car looks like!"
             />
             <ImageUpload
               value={imageSrcValue}
@@ -220,7 +220,7 @@ const RentModal = () => {
         return (
           <div className="flex flex-col gap-8 ">
             <Heading
-              title="How would you describe your place?"
+              title="How would you describe your car?"
               subtitle="Short and sweet works best!"
             />
             <Input
@@ -247,7 +247,7 @@ const RentModal = () => {
           <div className="flex flex-col gap-8 ">
             <Heading
               title="Now set your price?"
-              subtitle="How much do you charge per night!"
+              subtitle="How much do you charge per day!"
             />
             <Input
               formatPrice

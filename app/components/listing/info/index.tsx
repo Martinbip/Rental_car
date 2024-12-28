@@ -41,12 +41,12 @@ const ListingInfo = ({
     <div className="col-span-4 flex flex-col gap-8">
       <div className="flex flex-col gap-2 ">
         <div className="text-xl font-semibold flex flex-row items-center gap-2">
-          <div>Car owner {user.name}</div>
+          <div>Chủ xe {user.name}</div>
           <Avatar src={user.image} />
         </div>
         {rentedBy && 
           <div className="text-xl font-semibold flex flex-row items-center gap-2 mt-1">
-            <div>Rented by {rentedBy.name}</div>
+            <div>Thuê bởi {rentedBy.name}</div>
             <Avatar src={rentedBy.image} />
           </div>
         }

@@ -29,7 +29,7 @@ const HeartButton = ({ listingId, currentUser }: IHeartButtonProps) => {
       />
       <AiFillHeart
         size={24}
-        className={cn(hasFavorited ? "fill-rose-500 " : "fill-neutral-500/70")}
+        className={cn(hasFavorited ? "fill-green-500 " : "fill-neutral-500/70")}
       />
     </div>
   );

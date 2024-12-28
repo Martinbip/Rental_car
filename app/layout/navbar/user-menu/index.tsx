@@ -98,11 +98,11 @@ const UserMenu = ({ currentUser }: IUserMenuProps) => {
                 />
                 <UserMenuItem
                   onClick={() => router.push("/properties")}
-                  label="My Properties"
+                  label="My Cars"
                 />
                 <UserMenuItem
                   onClick={rentModal.onOpen}
-                  label="Rentalcar"
+                  label="Upload your car"
                 />
                 <hr />
                 <UserMenuItem onClick={signOut} label="Logout" />

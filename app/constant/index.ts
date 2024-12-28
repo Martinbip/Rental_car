@@ -9,6 +9,10 @@ import { LiaTruckPickupSolid } from "react-icons/lia";
 import { FaTruckPickup } from "react-icons/fa";
 import { IoDiamond } from "react-icons/io5";
 import { MdOutlineVilla } from "react-icons/md";
+import { IoCarSport } from "react-icons/io5";
+import { TbBus } from "react-icons/tb";
+
+
   
 export const categories = [
   // {
@@ -71,6 +75,22 @@ export const categories = [
     icon: FaTruckPickup ,
     description: "Pickup Truck",
   },
+  {
+    label: "Sportcar",
+    icon: IoCarSport ,
+    description: "Sport Car",
+  },
+  {
+    label: "Touris bus",
+    icon: TbBus,
+    description: "Touris bus",
+  },
+  {
+    label: "Luxury Car",
+    icon: IoDiamond,
+    description: "Luxury Car",
+  },
+  
 ];
 
 export const fuelOptions = [

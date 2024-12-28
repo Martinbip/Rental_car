@@ -1,9 +1,9 @@
 import prisma from "@/app/libs/prismadb";
-import { ISearchListingParams, SafeListing } from "../types";
+import { ISearchListingParams, SafeListing, SafeUser } from "../types";
 
 export default async function getListings(
   params: ISearchListingParams
-): Promise<SafeListing[]> {
+): Promise<(SafeListing&{user:SafeUser})[]> {
   try {
     const {
       userId,
@@ -57,10 +57,20 @@ export default async function getListings(
       where: query,
       orderBy: {
         createdAt: "desc",
+      
+      },
+      include: {
+        user: true,    
       },
     });
     const safeListings = listings.map((listing) => ({
       ...listing,
+      user: {
+        ...listing.user,
+        emailVerified: listing.user.emailVerified?.toISOString() || null,
+        createdAt: listing.createdAt.toISOString(),
+        updatedAt: listing.updatedAt.toISOString(),
+      },
       createdAt: listing.createdAt.toISOString(),
       updatedAt: listing.updatedAt.toISOString(),
     }));

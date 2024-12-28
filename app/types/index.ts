@@ -14,6 +14,7 @@ Listing, "createdAt" | "updatedAt"
 > & {
   createdAt: string;
   updatedAt: string;
+  user: SafeUser;
 };
 export type SafeReservation = Omit<
   Reservation,
