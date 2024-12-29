@@ -3,7 +3,7 @@ import { ISearchListingParams, SafeListing, SafeUser } from "../types";
 
 export default async function getListings(
   params: ISearchListingParams
-): Promise<(SafeListing&{user:SafeUser})[]> {
+): Promise<(SafeListing & { user: SafeUser })[]> {
   try {
     const {
       userId,
@@ -13,7 +13,7 @@ export default async function getListings(
       transmissionType,
       startDate,
       endDate,
-      locationValue,
+      cityOrProvince,
       category,
     } = params;
 
@@ -24,8 +24,8 @@ export default async function getListings(
     if (category) {
       query.category = category;
     }
-    if (locationValue) {
-      query.locationValue = locationValue;
+    if (cityOrProvince) {
+      query.locationValue = cityOrProvince;
     }
     if (seatCount) {
       query.seatCount = { gte: +seatCount };
@@ -57,10 +57,9 @@ export default async function getListings(
       where: query,
       orderBy: {
         createdAt: "desc",
-      
       },
       include: {
-        user: true,    
+        user: true,
       },
     });
     const safeListings = listings.map((listing) => ({

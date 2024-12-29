@@ -15,6 +15,8 @@ export async function POST(request: Request) {
     const {
       category,
       location,
+      locationLatLon,
+      cityOrProvince,
       seatCount,
       transmissionType,
       fuel,
@@ -59,6 +61,8 @@ export async function POST(request: Request) {
         fuelConsumption,
         userId: currentUser.id,
         locationValue: location.value,
+        locationLatLon,
+        cityOrProvince,
       },
     });
 

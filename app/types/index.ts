@@ -42,11 +42,33 @@ export interface ISearchListingParams {
   fuel?: FuelType,
   startDate?: string;
   endDate?: string;
-  locationValue?: string;
+  cityOrProvince?: string;
   category?: string;
 }
 
 export interface ICommonSelectParams {
   value: any;
   label: string;
+}
+
+export interface NominatimResponse {
+  place_id: string;
+  licence: string;
+  osm_type: string;
+  osm_id: string;
+  boundingbox: [string, string, string, string]; // [south, north, west, east]
+  lat: string; // Latitude as a string
+  lon: string; // Longitude as a string
+  display_name: string;
+  class: string; // E.g., "place"
+  type: string; // E.g., "city"
+  importance: number; // Ranking score
+  icon?: string; // Optional icon URL for certain places
+  address: {
+    city?: string; // Optional because not all places are cities
+    state?: string; // Optional because not all places have states
+    country?: string;
+    country_code?: string;
+    ISO3166_2_lvl4?: string; // Adjusted to use camelCase
+  };
 }
