@@ -35,8 +35,6 @@ const ListingCard = ({
   reservation,
 }: IListingCardProps) => {
   const router = useRouter();
-  const { getByValue } = useCountries();
-  const location = getByValue(data.locationValue);
 
   const handleAction = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -84,7 +82,7 @@ const ListingCard = ({
           </div>
         </div>
         <div className="font-semibold text-lg">
-          {location?.region}, {location?.label}
+          {data.cityOrProvince}
         </div>
         <div className="font-light text-neutral-500">
           {reservationDate || data.category}

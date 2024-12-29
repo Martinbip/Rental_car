@@ -28,9 +28,6 @@ const SearchModal = () => {
   const params = useSearchParams();
   const [step, setStep] = useState(STEPS.LOCATION);
   const [location, setLocation] = useState<CountrySelectValue>();
-  // const [guestCount, setGuestCount] = useState(1);
-  // const [roomCount, setRoomCount] = useState(1);
-  // const [bathroomCount, setBathroomCount] = useState(1);
   const [seatCount, setSeatCount] = useState(4);
   const [fuel, setFuel] = useState('');
   const [fuelConsumption, setFuelConsumption] = useState(8);

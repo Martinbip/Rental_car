@@ -1,6 +1,7 @@
 "use client";
 
 import CategoryInput from "@/app/components/category-input";
+import { ComboboxLocation } from "@/app/components/combobox/combobox";
 import CommonSelect from "@/app/components/common-select";
 import CounterInput from "@/app/components/counter-input";
 import CountrySelect from "@/app/components/country-select";
@@ -9,7 +10,11 @@ import ImageUpload from "@/app/components/image-upload";
 import Input from "@/app/components/input";
 import Map from "@/app/components/map";
 import Modal from "@/app/components/modal";
-import { categories, fuelOptions, transmissionTypeOptions } from "@/app/constant";
+import {
+  categories,
+  fuelOptions,
+  transmissionTypeOptions,
+} from "@/app/constant";
 import useRentModal from "@/app/hooks/useRentModal";
 import { FuelType, TransmissionType } from "@prisma/client";
 import axios from "axios";
@@ -43,7 +48,9 @@ const RentModal = () => {
   } = useForm<FieldValues>({
     defaultValues: {
       category: "",
-      location: null,
+      location: "",
+      locationLatLon: [14.0583, 108.2772],
+      cityOrProvince: "",
       guestCount: 1,
       roomCount: 1,
       bathroomCount: 1,
@@ -59,20 +66,14 @@ const RentModal = () => {
   });
 
   const categoryValue = watch("category");
-  const locationValue = watch("location");
-  const guestCountValue = watch("guestCount");
-  const roomCountValue = watch("roomCount");
-  const bathroomCountValue = watch("bathroomCount");
   const seatCountValue = watch("seatCount");
-  const transmissionTypeValue = watch("transmissionType");
-  const fuelValue = watch("fuel");
   const fuelConsumptionValue = watch("fuelConsumption");
   const imageSrcValue = watch("imageSrc");
+  const locationLatLon = watch("locationLatLon");
 
   const Map = useMemo(
-    () => dynamic(() => import("@/app/components/map"), 
-    { ssr: false }),
-    [locationValue]
+    () => dynamic(() => import("@/app/components/map"), { ssr: false }),
+    [locationLatLon]
   );
 
   const setCustomValue = useCallback(
@@ -81,7 +82,6 @@ const RentModal = () => {
         shouldValidate: true,
         shouldDirty: true,
         shouldTouch: true,
- 
       });
     },
     [setValue]
@@ -96,6 +96,7 @@ const RentModal = () => {
         return onNext();
       }
       setIsLoading(true);
+      console.log(data)
       axios
         .post("/api/listings", data)
         .then(() => {
@@ -163,12 +164,11 @@ const RentModal = () => {
               title="What's the current location of the car?"
               subtitle="Help guests find you!"
             />
-            <CountrySelect
-              onChange={(value) => setCustomValue("location", value)}
-              value={locationValue}
+            <ComboboxLocation
+              setFormValue={setCustomValue}
             />
             <div className="min-h-[35vh]">
-              <Map center={locationValue?.latlng} />
+              <Map center={locationLatLon} />
             </div>
           </div>
         );
@@ -267,13 +267,11 @@ const RentModal = () => {
     register,
     isLoading,
     categoryValue,
-    locationValue,
     imageSrcValue,
     setCustomValue,
     seatCountValue,
     fuelConsumptionValue,
-    // fuelValue,
-    // transmissionTypeValue
+    locationLatLon,
   ]);
 
   return (

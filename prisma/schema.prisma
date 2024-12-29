@@ -65,6 +65,8 @@ model Listing {
   transmissionType  TransmissionType
   fuel          FuelType
   locationValue String
+  locationLatLon Float[]
+  cityOrProvince String
   price         Int
 
   createdAt DateTime @default(now())

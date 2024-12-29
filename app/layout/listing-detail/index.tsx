@@ -115,7 +115,7 @@ const ListingDetail = ({
               fuel={listing.fuel as FuelType}
               fuelConsumption={listing.fuelConsumption as number}
               transmissionType={listing.transmissionType as TransmissionType}
-              locationValue={listing.locationValue}
+              locationLatLon={listing.locationLatLon}
             />
             <div className="order-first md-10 md:order-last md:col-span-3">
               <ListingReservation
