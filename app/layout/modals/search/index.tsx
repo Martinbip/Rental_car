@@ -2,19 +2,21 @@
 import React, { useCallback, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Range } from "react-date-range";
-import dynamic from "next/dynamic";
 import qs from "query-string";
 
-import { CountrySelectValue } from "@/app/types";
+import { ICommonSelectParams } from "@/app/types";
 import useSearchModal from "@/app/hooks/useSearchModal";
 import Modal from "@/app/components/modal";
 import { formatISO, set } from "date-fns";
 import Heading from "@/app/components/heading";
-import CountrySelect from "@/app/components/country-select";
 import Calendar from "@/app/components/calendar";
 import CounterInput from "@/app/components/counter-input";
 import CommonSelect from "@/app/components/common-select";
-import { fuelOptions, transmissionTypeOptions } from "@/app/constant";
+import {
+  cityOrProvinceOptions,
+  fuelOptions,
+  transmissionTypeOptions,
+} from "@/app/constant";
 
 enum STEPS {
   LOCATION = 0,
@@ -27,11 +29,11 @@ const SearchModal = () => {
   const router = useRouter();
   const params = useSearchParams();
   const [step, setStep] = useState(STEPS.LOCATION);
-  const [location, setLocation] = useState<CountrySelectValue>();
+  const [cityOrProvince, setCityOrProvince] = useState("");
   const [seatCount, setSeatCount] = useState(4);
-  const [fuel, setFuel] = useState('');
+  const [fuel, setFuel] = useState("");
   const [fuelConsumption, setFuelConsumption] = useState(8);
-  const [transmissionType, setTransmissionType] = useState('');
+  const [transmissionType, setTransmissionType] = useState("");
   const [dateRange, setDateRange] = useState<Range>({
     key: "selection",
     startDate: new Date(),
@@ -40,20 +42,15 @@ const SearchModal = () => {
 
   const resetState = () => {
     setSeatCount(4);
-    setFuel('');
+    setFuel("");
     setFuelConsumption(8);
-    setTransmissionType('');
+    setTransmissionType("");
     setDateRange({
       startDate: new Date(),
       endDate: new Date(),
-      key: 'selection',
+      key: "selection",
     });
   };
-
-  const Map = useMemo(
-    () => dynamic(() => import("@/app/components/map"), { ssr: false }),
-    [location]
-  );
 
   const onBack = useCallback(() => {
     setStep((prev) => prev - 1);
@@ -75,7 +72,7 @@ const SearchModal = () => {
 
     const updatedQuery: any = {
       ...currentQuery,
-      locationValue: location?.value,
+      cityOrProvince,
       seatCount,
       fuel,
       fuelConsumption,
@@ -106,13 +103,13 @@ const SearchModal = () => {
     onNext,
     params,
     router,
-    location,
     dateRange,
     searchModal,
     seatCount,
     fuel,
     fuelConsumption,
     transmissionType,
+    cityOrProvince,
   ]);
 
   const actionLabel = useMemo(
@@ -134,14 +131,11 @@ const SearchModal = () => {
               title="Where do you wanna go?"
               subtitle="Find the perfect location!"
             />
-            <CountrySelect
-              value={location}
-              onChange={(value) => setLocation(value)}
+            <CommonSelect
+              title="City or Province"
+              options={cityOrProvinceOptions as ICommonSelectParams[]}
+              onChange={setCityOrProvince}
             />
-            <hr />
-            <div className="min-h-[35vh]">
-              <Map center={location?.latlng} />
-            </div>
           </div>
         );
       case STEPS.DATE:
@@ -164,24 +158,6 @@ const SearchModal = () => {
               title="More information"
               subtitle="Find your perfect place!"
             />
-            {/* <CounterInput
-              onChange={setGuestCount}
-              title="Guests"
-              subTitle="How many guests are coming?"
-              value={guestCount}
-            />
-            <CounterInput
-              onChange={setRoomCount}
-              title="Rooms"
-              subTitle="How many rooms do you need?"
-              value={roomCount}
-            />
-            <CounterInput
-              onChange={setBathroomCount}
-              title="Bathrooms"
-              subTitle="How many bathrooms do you need?"
-              value={bathroomCount}
-            /> */}
             <CounterInput
               value={seatCount}
               onChange={setSeatCount}
@@ -207,7 +183,7 @@ const SearchModal = () => {
           </div>
         );
     }
-  }, [step, Map, location, dateRange, seatCount, fuelConsumption]);
+  }, [step, dateRange, seatCount, fuelConsumption]);
 
   return (
     <Modal

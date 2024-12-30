@@ -4,11 +4,9 @@ import CategoryInput from "@/app/components/category-input";
 import { ComboboxLocation } from "@/app/components/combobox/combobox";
 import CommonSelect from "@/app/components/common-select";
 import CounterInput from "@/app/components/counter-input";
-import CountrySelect from "@/app/components/country-select";
 import Heading from "@/app/components/heading";
 import ImageUpload from "@/app/components/image-upload";
 import Input from "@/app/components/input";
-import Map from "@/app/components/map";
 import Modal from "@/app/components/modal";
 import {
   categories,

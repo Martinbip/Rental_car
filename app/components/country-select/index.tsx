@@ -9,7 +9,7 @@ interface ICountrySelectProps {
   value?: CountrySelectValue;
   onChange: (value: CountrySelectValue) => void;
 }
-const CountrySelect = ({ value, onChange }: ICountrySelectProps) => {
+const CityOrProvinceSelect = ({ value, onChange }: ICountrySelectProps) => {
 
   const { getAll } = useCountries();
 
@@ -52,4 +52,4 @@ const CountrySelect = ({ value, onChange }: ICountrySelectProps) => {
   );
 };
 
-export default CountrySelect;
+export default CityOrProvinceSelect;

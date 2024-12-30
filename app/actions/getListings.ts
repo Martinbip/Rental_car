@@ -25,7 +25,7 @@ export default async function getListings(
       query.category = category;
     }
     if (cityOrProvince) {
-      query.locationValue = cityOrProvince;
+      query.cityOrProvince = cityOrProvince;
     }
     if (seatCount) {
       query.seatCount = { gte: +seatCount };

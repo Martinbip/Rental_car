@@ -31,7 +31,7 @@ const AutoZoom = ({ center }: { center?: number[] }) => {
 
   useEffect(() => {
     if (center) {
-      map.setView(center as L.LatLngExpression, 20);
+      map.setView(center as L.LatLngExpression, 10);
     }
   }, [center, map]);
 
