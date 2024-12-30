@@ -20,7 +20,7 @@ interface IListingInfoProps {
   fuel: FuelType,
   fuelConsumption: number,
   description: string;
-  locationValue: string;
+  locationLatLon: number[];
   rentedBy?: SafeUser;
 }
 
@@ -32,11 +32,9 @@ const ListingInfo = ({
   fuel,
   fuelConsumption,
   description,
-  locationValue,
+  locationLatLon,
   rentedBy
 }: IListingInfoProps) => {
-  const { getByValue } = useCountries();
-  const cordinates = getByValue(locationValue)?.latlng;
   return (
     <div className="col-span-4 flex flex-col gap-8">
       <div className="flex flex-col gap-2 ">
@@ -71,7 +69,7 @@ const ListingInfo = ({
       <hr />
       <div className="text-lg font-light text-neutral-500">{description}</div>
       <hr />
-      <Map center={cordinates} />
+      <Map center={locationLatLon} />
     </div>
   );
 };

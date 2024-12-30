@@ -60,7 +60,7 @@ export async function POST(request: Request) {
         fuel,
         fuelConsumption,
         userId: currentUser.id,
-        locationValue: location.value,
+        locationValue: location,
         locationLatLon,
         cityOrProvince,
       },

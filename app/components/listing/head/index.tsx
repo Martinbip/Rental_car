@@ -1,8 +1,6 @@
 "use client";
-
-import useCountries from "@/app/hooks/useCountries";
 import { SafeUser } from "@/app/types";
-import React, { useMemo } from "react";
+import React from "react";
 import Heading from "../../heading";
 import Image from "next/image";
 import HeartButton from "../../heart-button";
@@ -12,7 +10,7 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@/components/ui/carousel"
+} from "@/components/ui/carousel";
 interface IListingHeadProps {
   title: string;
   imageSrc: string[];
@@ -28,37 +26,28 @@ const ListingHead = ({
   currentUser,
   id,
 }: IListingHeadProps) => {
-  const { getByValue } = useCountries();
-  const location = useMemo(
-    () => getByValue(locationValue),
-    [getByValue, locationValue]
-  );
-
   return (
     <>
-      <Heading
-        title={title}
-        subtitle={`${location?.region}, ${location?.label}`}
-      />
+      <Heading title={title} subtitle={locationValue} />
       <div className="w-full h-[60vh] rounded-xl relative">
         {imageSrc && (
-                <Carousel>
-                  <CarouselContent>
-                    {imageSrc.map((url,index) => (  
-                      <CarouselItem key={index} className="relative h-[60vh]">
-                        <Image
-                          fill
-                          src={url}
-                          alt="Listing Detail Image"
-                          className="object-cover w-full h-full"
-                        />
-                      </CarouselItem>)
-                    )}
-                  </CarouselContent>
-                  <CarouselPrevious />
-                  <CarouselNext />
-                </Carousel>
-            )}
+          <Carousel>
+            <CarouselContent>
+              {imageSrc.map((url, index) => (
+                <CarouselItem key={index} className="relative h-[60vh]">
+                  <Image
+                    fill
+                    src={url}
+                    alt="Listing Detail Image"
+                    className="object-cover w-full h-full"
+                  />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious />
+            <CarouselNext />
+          </Carousel>
+        )}
         <div className="absolute top-5 right-5">
           <HeartButton listingId={id} currentUser={currentUser} />
         </div>

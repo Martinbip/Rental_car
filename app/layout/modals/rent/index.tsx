@@ -96,6 +96,7 @@ const RentModal = () => {
         return onNext();
       }
       setIsLoading(true);
+      console.log(data)
       axios
         .post("/api/listings", data)
         .then(() => {
