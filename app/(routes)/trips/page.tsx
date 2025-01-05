@@ -24,8 +24,8 @@ const TripsPage = async () => {
     return (
       <ClientOnly>
         <EmptyState
-          title="No trips Found"
-          subTitle="Looks like you have not reserved any trips"
+          title="No cars Found"
+          subTitle="Looks like you have not reserved any cars"
         />
       </ClientOnly>
     );

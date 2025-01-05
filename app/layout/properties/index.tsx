@@ -41,7 +41,7 @@ const Properties = ({ currentUser, listings }: IProperties) => {
   );
   return (
     <Container>
-      <Heading title="Properties" subtitle="List of properties you have!" />
+      <Heading title="My cars" subtitle="List of cars you have!" />
       <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-8">
         {listings.map((listing) => (
           <ListingCard
@@ -50,7 +50,7 @@ const Properties = ({ currentUser, listings }: IProperties) => {
             onAction={onCancel}
             actionId={listing.id}
             currentUser={currentUser}
-            actionLabel="Delete property"
+            actionLabel="Delete car"
             disabled={deletingId === listing.id}
           />
         ))}

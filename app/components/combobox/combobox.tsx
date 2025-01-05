@@ -63,7 +63,7 @@ export function ComboboxLocation({ setFormValue }: ComboboxLocationProps) {
     <div className="relative w-full mx-auto">
       <Input
         type="text"
-        placeholder="Email"
+        placeholder="Nhập địa chỉ"
         value={query}
         onChange={(e) => onInputChange(e.target.value)}
         className=""

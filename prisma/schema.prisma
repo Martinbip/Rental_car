@@ -50,7 +50,6 @@ enum TransmissionType {
 enum FuelType {
   Gasoline 
   Diesel 
-  Electric 
   
 }
 

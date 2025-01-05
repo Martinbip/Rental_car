@@ -89,7 +89,7 @@ const ListingCard = ({
         </div>
         <div className="flex flex-row items-center gap-1">
           <div className="font-semibold">VND {price}</div>
-          {!reservation && <div className="font-light">ngày</div>}
+          {!reservation && <div className="font-light">day</div>}
         </div>
         {onAction && actionLabel && (
           <Button

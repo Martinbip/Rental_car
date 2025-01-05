@@ -1,4 +1,4 @@
-import { Nunito } from "next/font/google";
+import { Roboto } from "next/font/google";
 import Navbar from "@/app/layout/navbar";
 import RegisterModal from "@/app/layout/modals/register";
 import ToasterProvider from "@/app/providers/ToasterProvider";
@@ -16,8 +16,9 @@ export const metadata = {
   
 };
 
-const font = Nunito({
+const font = Roboto({
   subsets: ["latin"],
+  weight: ["400", "700"], // Thêm các độ dày bạn muốn sử dụng
 });
 
 export default async function RootLayout({

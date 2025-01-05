@@ -49,7 +49,7 @@ export const categories = [
 export const fuelOptions = [
   { value: "Gasoline", label: "Gasoline" },
   { value: "Diesel", label: "Diesel" },
-  { value: "Electric", label: "Electric" },
+  // { value: "Electric", label: "Electric" },
 ];
 
 export const transmissionTypeOptions = [

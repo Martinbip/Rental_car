@@ -22,7 +22,7 @@ const Search = () => {
       return getByValue(locationValue as string)?.label;
     }
 
-    return "Địa điểm";
+    return "Location";
   }, [locationValue, getByValue]);
 
   const durationLabel = useMemo(() => {
@@ -35,18 +35,18 @@ const Search = () => {
         diff = 1;
       }
 
-      return `${diff} Ngày`;
+      return `${diff} Days`;
     }
 
-    return "Thời gian thuê";
+    return "Duration";
   }, [startDate, endDate]);
 
   const guestLabel = useMemo(() => {
     if (seatCount) {
-      return `${seatCount} Chỗ`;
+      return `${seatCount} Seats`;
     }
 
-    return "Chọn số chỗ ";
+    return "Pick Seats";
   }, [seatCount]);
   return (
     <div
@@ -96,21 +96,20 @@ const Search = () => {
               bg-green-600
               rounded-lg
               text-white
+              hover:bg-green-700 
             "
           >
             <button
           className="
             px-4 
             py-2 
-            bg-green-600 
             text-white 
             font-semibold 
             rounded-lg
-            hover:bg-green-700 
             transition
           "
         >
-          Tìm Xe
+          Find
         </button>
           </div>
         </div>
