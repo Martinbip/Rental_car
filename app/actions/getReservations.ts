@@ -10,7 +10,7 @@ interface IParams {
 export default async function getReservations(
   params: IParams
 ): Promise<
-  (SafeReservation & { listing: SafeListing } & { user: SafeUser })[]
+  (SafeReservation & { listing: SafeListing & { user: SafeUser } } & { user: SafeUser })[]
 > {
   try {
     const { listingId, userId, authorId } = params;
@@ -28,7 +28,11 @@ export default async function getReservations(
     const reservations = await prisma.reservation.findMany({
       where: query,
       include: {
-        listing: true,
+        listing: {
+          include: {
+            user: true,
+          },
+        },
         user: true,
       },
       orderBy: {
@@ -46,6 +50,14 @@ export default async function getReservations(
         ...reservation.listing,
         createdAt: reservation.listing.createdAt.toISOString(),
         updatedAt: reservation.listing.updatedAt.toISOString(),
+        user: {
+          ...reservation.listing.user,
+          createdAt: reservation.listing.user.createdAt.toISOString(),
+          updatedAt: reservation.listing.user.updatedAt.toISOString(),
+          emailVerified: reservation.listing.user.emailVerified
+            ? reservation.listing.user.emailVerified.toISOString()
+            : null,
+        },
       },
       user: {
         ...reservation.user,
