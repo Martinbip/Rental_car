@@ -9,11 +9,11 @@ const Loader = () => {
         height="80"
         width="80"
         radius="9"
-        color="rgb(244,63,94)"
+        color="rgb(34, 197, 94)"
         ariaLabel="three-dots-loading"
         visible={true}
       />
-      Loading...
+      Loading ....
     </div>
   );
 };
