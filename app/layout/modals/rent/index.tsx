@@ -220,7 +220,7 @@ const RentModal = () => {
             />
             <Input
               required
-              id="title( Name of the car )"
+              id="title"
               label="Title"
               disabled={isLoading}
               register={register}
@@ -229,7 +229,7 @@ const RentModal = () => {
             <hr />
             <Input
               required
-              id="description( information about the car and contact details )"
+              id="description"
               label="Description"
               disabled={isLoading}
               register={register}
