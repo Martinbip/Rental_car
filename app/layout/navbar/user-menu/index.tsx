@@ -85,7 +85,7 @@ const UserMenu = ({ currentUser }: IUserMenuProps) => {
             {currentUser ? (
               <>
                 <UserMenuItem
-                  onClick={() => router.push("/trips")}
+                  onClick={() => router.push("/orders")}
                   label="My Orders"
                 />
                 <UserMenuItem
@@ -97,7 +97,7 @@ const UserMenu = ({ currentUser }: IUserMenuProps) => {
                   label="My Reservations"
                 />
                 <UserMenuItem
-                  onClick={() => router.push("/properties")}
+                  onClick={() => router.push("/vehicle")}
                   label="My Cars"
                 />
                 <UserMenuItem

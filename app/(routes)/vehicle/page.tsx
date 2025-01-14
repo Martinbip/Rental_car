@@ -1,31 +1,31 @@
 import getCurrentUser from "@/app/actions/getCurrentUser";
-import getReservations from "@/app/actions/getReservations";
+import getListings from "@/app/actions/getListings";
 import ClientOnly from "@/app/components/client-only";
 import EmptyState from "@/app/components/empty-state";
-import Trips from "@/app/layout/trips";
+import Vehicle from "@/app/layout/vehicle";
 import React from "react";
 
-const TripsPage = async () => {
+const VehiclePage = async () => {
   const currentUser = await getCurrentUser();
 
   if (!currentUser) {
     return (
       <ClientOnly>
-        <EmptyState title="Unauthroized" subTitle="Please login" />
+        <EmptyState title="Unauthorized" subTitle="Please login" />
       </ClientOnly>
     );
   }
 
-  const reservations = await getReservations({
+  const properties = await getListings({
     userId: currentUser.id,
   });
 
-  if (reservations.length === 0) {
+  if (properties.length === 0) {
     return (
       <ClientOnly>
         <EmptyState
-          title="No cars Found"
-          subTitle="Looks like you have not reserved any cars"
+          title="No car found"
+          subTitle="Looks like you don't have car yet."
         />
       </ClientOnly>
     );
@@ -33,11 +33,12 @@ const TripsPage = async () => {
 
   return (
     <ClientOnly>
-      <Trips 
-      reservations={reservations} 
-      currentUser={currentUser} />
+      <Vehicle 
+        currentUser={currentUser} 
+        listings={properties} 
+      />
     </ClientOnly>
   );
 };
 
-export default TripsPage;
+export default VehiclePage;

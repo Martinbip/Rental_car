@@ -2,19 +2,18 @@
 import Container from "@/app/components/container";
 import Heading from "@/app/components/heading";
 import ListingCard from "@/app/components/listing/card";
-import { SafeListing, SafeReservation, SafeUser } from "@/app/types";
-import { Listing, Reservation, User } from "@prisma/client";
+import { SafeListing, SafeUser } from "@/app/types";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
-interface ITripsProps {
-  reservations: (SafeReservation & { listing: SafeListing })[];
+interface IVehicle {
   currentUser: SafeUser;
+  listings: SafeListing[];
 }
 
-const Trips = ({ reservations, currentUser }: ITripsProps) => {
+const Vehicle = ({ currentUser, listings }: IVehicle) => {
   const router = useRouter();
   const [deletingId, setDeletingId] = useState("");
 
@@ -26,9 +25,9 @@ const Trips = ({ reservations, currentUser }: ITripsProps) => {
     (id: string) => {
       setDeletingId(id);
       axios
-        .delete(`/api/reservations/${id}`)
+        .delete(`/api/listings/${id}`)
         .then(() => {
-          toast.success("Reservation canceled");
+          toast.success("Listing deleted");
           router.refresh();
         })
         .catch((err) => {
@@ -40,23 +39,19 @@ const Trips = ({ reservations, currentUser }: ITripsProps) => {
     },
     [router]
   );
-
   return (
     <Container>
-      <Heading
-        title="My Order"
-        subtitle="Where you've driven"
-      />
+      <Heading title="My cars" subtitle="List of cars you have!" />
       <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-8">
-        {reservations.map((reservation) => (
+        {listings.map((listing) => (
           <ListingCard
-            key={reservation.id}
-            data={reservation.listing}
-            actionLabel="Cancel reservation"
-            disabled={deletingId === reservation.id}
+            data={listing}
+            key={listing.id}
             onAction={onCancel}
-            actionId={reservation.id}
-            reservation={reservation}
+            actionId={listing.id}
+            currentUser={currentUser}
+            actionLabel="Delete car"
+            disabled={deletingId === listing.id}
           />
         ))}
       </div>
@@ -64,4 +59,4 @@ const Trips = ({ reservations, currentUser }: ITripsProps) => {
   );
 };
 
-export default Trips;
+export default Vehicle;
